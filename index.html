@@ -60,7 +60,7 @@ body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-s
 .cols b { display: block; color: var(--fg); font-weight: 600; font-size: 12.5px; }
 .band { --h: 215; position: relative; background: hsl(var(--h) var(--band-s) var(--band-l)); border-radius: 10px; margin-bottom: 8px; padding-block: 6px; }
 .band-name { position: absolute; left: 12px; top: 12px; width: 100px; font-family: var(--mono); font-weight: 600; font-size: 14px; line-height: 1.2; color: hsl(var(--h) 50% var(--label-l)); }
-.band-name small { display: block; margin-top: 4px; font-weight: 400; font-size: 10.5px; color: var(--muted); }
+.band-name small { display: block; margin-top: 4px; font-weight: 400; font-size: 11px; color: var(--muted); }
 .row { min-height: 44px; position: relative; }
 .row + .row { border-top: 1px dashed hsl(var(--h) 30% var(--edge-l) / .45); }
 .rlabel { grid-column: 2; align-self: center; text-align: right; padding-right: 12px; font-family: var(--mono); font-size: 11px; color: hsl(var(--h) 45% var(--label-l)); }
@@ -68,18 +68,18 @@ body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-s
 .box { position: relative; display: block; flex: 0 0 auto; width: 148px; padding: 5px 8px 6px; border-radius: 5px; border: 1.5px solid hsl(var(--h) 45% var(--edge-l)); text-decoration: none; text-align: center; font-size: 11.5px; line-height: 1.25; transition: transform .12s ease, box-shadow .12s ease; }
 .box:hover, .box:focus-visible { transform: translateY(-1px); box-shadow: 0 2px 8px hsl(var(--h) 40% 30% / .25); outline: none; }
 .box:focus-visible { outline: 2px solid hsl(var(--h) 60% var(--arrow-l)); outline-offset: 2px; }
-.box .ref { display: block; font-family: var(--mono); font-size: 9.5px; opacity: .75; margin-top: 2px; }
+.box .ref { display: block; font-family: var(--mono); font-size: 11px; opacity: .8; margin-top: 2px; }
 .box.P1 { background: hsl(var(--h) var(--p1-s) var(--p1-l)); color: var(--p1-fg); border-color: hsl(var(--h) var(--p1-s) calc(var(--p1-l) - 8%)); font-weight: 500; }
 .box.P2 { background: hsl(var(--h) var(--p2-s) var(--p2-l)); color: var(--p2-fg); }
 .box.P3 { background: hsl(var(--h) var(--p3-s) var(--p3-l)); color: var(--p3-fg); }
 .box.NT { background: transparent; color: var(--nt-fg); border-style: dashed; }
 .box.done { background: transparent; color: var(--nt-fg); border-style: solid; }
-.box .badge { position: absolute; top: -7px; right: -6px; font-family: var(--mono); font-size: 8.5px; font-weight: 600; padding: 1px 4px; border-radius: 3px; background: var(--badge-bg); color: var(--badge-fg); letter-spacing: .03em; }
+.box .badge { position: absolute; top: -7px; right: -6px; font-family: var(--mono); font-size: 11px; line-height: 1.1; font-weight: 600; padding: 1px 4px; border-radius: 3px; background: var(--badge-bg); color: var(--badge-fg); letter-spacing: .03em; }
 .box .prog { display: block; height: 3px; margin-top: 4px; border-radius: 2px; background: hsl(var(--h) 30% var(--edge-l) / .5); overflow: hidden; }
 .box .prog i { display: block; height: 100%; background: currentColor; }
 .box.wip::before { content: ""; position: absolute; left: -5px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: hsl(140 60% 42%); box-shadow: 0 0 0 2px var(--bg); }
 .star { background: var(--star-bg); color: var(--star-fg); border-color: var(--star-bg); font-weight: 600; }
-.star em { display: block; font-style: italic; font-weight: 400; font-size: 10.5px; opacity: .85; }
+.star em { display: block; font-style: italic; font-weight: 400; font-size: 11px; opacity: .85; }
 .star::after { content: "★"; position: absolute; top: -9px; left: 50%; margin-left: -6px; font-size: 12px; color: hsl(40 90% 55%); }
 svg.arrows { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: visible; }
 svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
