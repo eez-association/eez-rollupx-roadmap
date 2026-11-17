@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
 <style>
-/* Layout: strawmap-style swimlanes. Bands = workstreams, rows = topics, columns = horizons (Shipped → Now → Next → Later → North stars). Box fill = priority, arrows = throughlines. */
+/* Layout: strawmap-style swimlanes. Bands = workstreams, rows = topics, columns = horizons (Shipped → Now → Next → Later → Milestones). Box fill = priority, arrows = throughlines. */
 :root {
   --bg: #ffffff; --fg: #1b1e23; --muted: #5b636d; --line: #d9dde2; --panel: #f3f4f6;
   --band-l: 95%; --band-s: 55%; --edge-l: 72%;
@@ -54,7 +54,7 @@ body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-s
 .top .upd a { color: inherit; }
 .scroller { overflow-x: auto; padding-bottom: 8px; }
 .map { position: relative; min-width: 1240px; }
-.cols, .row { display: grid; grid-template-columns: 116px 96px 150px minmax(0,1fr) minmax(0,1.35fr) minmax(0,1.1fr) 150px; }
+.cols, .row { display: grid; grid-template-columns: 116px 96px 150px minmax(0,1fr) minmax(0,1.35fr) minmax(0,1.1fr) 184px; }
 .cols { font-family: var(--mono); font-size: 11.5px; color: var(--muted); padding-bottom: 6px; }
 .cols div { padding-left: 10px; }
 .cols b { display: block; color: var(--fg); font-weight: 600; font-size: 12.5px; }
@@ -111,7 +111,7 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
         <div><b>now</b>in progress · P1</div>
         <div><b>next</b>P2</div>
         <div><b>later</b>P3 · research</div>
-        <div><b>north stars</b>draft</div>
+        <div><b>milestones</b>rollupx-pm issues</div>
       </div>
       <div id="bands"></div>
       <svg class="arrows" id="arrows" aria-hidden="true"></svg>
@@ -127,15 +127,15 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
       <span class="box P2 wip">in progress</span>
       <span class="box P2">bug<span class="badge">BUG</span></span>
       <span class="box P2">feature<span class="badge">FEAT</span></span>
-      <span class="box star">north star<em>draft goal</em></span>
+      <span class="box star">milestone<em>pm tracking issue</em></span>
     </div>
     <div class="notes">
       <h2>DISCLAIMERS</h2>
       <ul>
-        <li><b>horizons, not dates:</b> the board has no dates, milestones or iterations yet</li>
+        <li><b>horizons, not dates:</b> the board has no dates or iterations, and no GitHub milestones yet</li>
         <li><b>placement:</b> by status and priority; dashed boxes have no priority, so their column is a proposal</li>
         <li><b>arrows:</b> throughlines between related cards, not hard dependencies</li>
-        <li><b>north stars:</b> drafted from the cards that point at them, not agreed goals</li>
+        <li><b>milestones:</b> the six eez-rollupx-pm tracking issues, placed in the row they close out</li>
         <li><b>owners:</b> only core#61 has an assignee</li>
       </ul>
     </div>
@@ -173,35 +173,32 @@ const bands = [
     { label: "ordering & fees", cells: {
       later: [I("12", "FIFO vs fee-based ordering", "Research FIFO versus fee-based cross-chain transaction ordering", RX+12, "P3", "", "?"),
               I("172", "fair batch fees + rebates", "Research fair cross-chain batch fees, user rebates and future-batch subsidies", RX+172, "NT"),
-              I("173", "multi-builder bundles vs DoS", "Research multiple builder bundles to reduce settlement DoS", RX+173, "NT")],
-      star: [I("s-fees", "fair cross-chain fees", "", null, "STAR", "", "", { sub: "ordering + rebates" })] } },
+              I("173", "multi-builder bundles vs DoS", "Research multiple builder bundles to reduce settlement DoS", RX+173, "NT")] } },
     { label: "execution model", cells: {
       later: [I("170", "pure L2 txs in Sync blocks", "Research pure L2 transaction inclusion in Sync blocks", RX+170, "NT"),
-              I("174", "account abstraction, atomic x-chain", "Research account abstraction for atomic cross-chain transactions", RX+174, "NT"),
-              I("pm2", "L2↔L2 in one composer", "Research L2-to-L2 execution within one composer", PM+2, "NT")] } },
+              I("174", "account abstraction, atomic x-chain", "Research account abstraction for atomic cross-chain transactions", RX+174, "NT")],
+      star: [I("pm2", "L2↔L2 in one composer", "Research L2-to-L2 execution within one composer", PM+2, "STAR", "", "", { sub: "pm#2 · research" })] } },
   ]},
   { name: "Proving & security", sub: "provers, access, audit", h: 268, rows: [
     { label: "provers", cells: {
       next: [I("149", "multi-prover quorum", "Design and implement multi-prover quorum support", RX+149, "P2", "FEAT", "L")],
-      later: [I("175", "prover in hardware TEE", "Run the RollupX prover in a hardware-backed TEE", RX+175, "NT"),
-              I("pm3", "ZisK prover integration", "Research ZisK prover integration with EEZ", PM+3, "NT")],
-      star: [I("s-prove", "multi-prover RollupX", "", null, "STAR", "", "", { sub: "quorum + TEE + ZK" })] } },
+      later: [I("175", "prover in hardware TEE", "Run the RollupX prover in a hardware-backed TEE", RX+175, "NT")],
+      star: [I("pm3", "ZisK prover integration", "Research ZisK prover integration with EEZ", PM+3, "STAR", "", "", { sub: "pm#3 · research" })] } },
     { label: "access & DoS", cells: {
       now: [I("151", "authenticate Composer–prover", "Authenticate Composer–prover control access", RX+151, "P1", "", "?")],
       next: [I("177", "DoS risks + node resource limits", "Assess denial-of-service risks and node resource protections", RX+177, "NT")] } },
     { label: "audit", cells: {
-      now: [I("pm4", "core-protocol contract audit", "Track the eez-core-protocol smart contract audit", PM+4, "NT")] } },
+      star: [I("pm4", "core-protocol contract audit", "Track the eez-core-protocol smart contract audit", PM+4, "STAR", "", "", { sub: "pm#4 · security" })] } },
   ]},
   { name: "Operations", sub: "node, deploys, composers", h: 150, rows: [
     { label: "node", cells: {
       now: [I("158", "Reth 2.11.0 upgrade", "Upgrade Reth to 2.11.0", RX+158, "P1", "", "L")],
       later: [I("114", "simpler snapshot cleanup (optional)", "Optional: simplify snapshot cleanup for the current Sync block model", RX+114, "P3", "", "M")] } },
     { label: "deploys", cells: {
-      next: [I("150", "structured config files", "Add structured configuration files with deployment compatibility", RX+150, "P2", "FEAT", "L"),
-             I("pm5", "deprecate first mainnet deployment", "Deprecate the first EEZ mainnet deployment", PM+5, "NT")] } },
+      next: [I("150", "structured config files", "Add structured configuration files with deployment compatibility", RX+150, "P2", "FEAT", "L")],
+      star: [I("pm5", "deprecate first mainnet deployment", "Deprecate the first EEZ mainnet deployment", PM+5, "STAR", "", "", { sub: "pm#5 · operations" })] } },
     { label: "composers", cells: {
-      next: [I("169", "multiple composers per deployment", "Support and test multiple composers for one RollupX deployment", RX+169, "NT")],
-      star: [I("s-comp", "many composers", "", null, "STAR", "", "", { sub: "one deployment" })] } },
+      next: [I("169", "multiple composers per deployment", "Support and test multiple composers for one RollupX deployment", RX+169, "NT")] } },
     { label: "testing", cells: {
       next: [I("152", "randomized queue/recovery models", "Add randomized queue/recovery models and fault coverage", RX+152, "P2", "", "L")] } },
   ]},
@@ -212,14 +209,13 @@ const bands = [
       next: [I("133", "review remaining backports", "Review remaining rollup0-to-rollupX backports", RX+133, "NT"),
              I("178", "audit open rollup0 issues", "Audit all open rollup0 issues for RollupX applicability", RX+178, "NT")] } },
     { label: "spec", cells: {
-      next: [I("176", "compare impl vs specs-draft", "Compare RollupX implementation with specs-draft", RX+176, "NT"),
-             I("pm6", "minimal rollup integration spec", "Write a minimal rollup integration spec for EEZ", PM+6, "NT")],
-      star: [I("s-spec", "spec-aligned RollupX", "", null, "STAR", "", "", { sub: "documented integration" })] } },
+      next: [I("176", "compare impl vs specs-draft", "Compare RollupX implementation with specs-draft", RX+176, "NT")],
+      star: [I("pm6", "minimal rollup integration spec", "Write a minimal rollup integration spec for EEZ", PM+6, "STAR", "", "", { sub: "pm#6 · documentation" })] } },
     { label: "docs & tools", cells: {
       next: [I("111", "doc: group cleanup + finalization", "Document group cleanup and block finalization with an example", RX+111, "P2", "", "S"),
              I("c61", "AI skill for core contracts", "Add an AI skill for using eez-core-protocol contracts", CP+61, "P2", "", "?")] } },
     { label: "chains", cells: {
-      later: [I("pm1", "non-EVM chain support", "Research support for non-EVM chains", PM+1, "NT")] } },
+      star: [I("pm1", "non-EVM chain support", "Research support for non-EVM chains", PM+1, "STAR", "", "", { sub: "pm#1 · research" })] } },
   ]},
 ];
 
@@ -227,9 +223,8 @@ const bands = [
 const links = [
   ["done", "135"], ["135", "133"], ["135", "178"],
   ["120", "130"], ["120", "81"], ["11", "85"], ["93", "85"],
-  ["12", "s-fees"], ["172", "s-fees"], ["173", "s-fees"],
-  ["151", "149"], ["149", "175"], ["175", "s-prove"], ["pm3", "s-prove"],
-  ["169", "s-comp"], ["176", "s-spec"], ["pm6", "s-spec"],
+  ["151", "149"], ["149", "175"], ["175", "pm3"],
+  ["170", "pm2"], ["174", "pm2"], ["176", "pm6"], ["150", "pm5"],
 ];
 
 const shipped = [
@@ -252,7 +247,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const refOf = it => it.id === "done" ? "#136–148" : it.id.startsWith("pm") ? "pm#" + it.id.slice(2) : it.id.startsWith("c") ? "core#61" : "#" + it.id;
 
 function boxHTML(it) {
-  if (it.pr === "STAR") return `<div class="box star" data-id="${it.id}">${esc(it.label)}<em>${esc(it.sub)}</em></div>`;
+  if (it.pr === "STAR") return `<a class="box star" data-id="${it.id}" href="${it.url}" target="_blank" rel="noopener" title="${esc(it.sub + " " + it.title)}">${esc(it.label)}<em>${esc(it.sub)}</em></a>`;
   const cls = it.pr === "DONE" ? "done" : it.pr;
   const eff = it.eff && it.eff !== "?" ? ` · ${it.eff}` : "";
   const tip = `${refOf(it)} ${it.title}${it.pr && it.pr !== "NT" && it.pr !== "DONE" ? " · " + it.pr : it.pr === "NT" ? " · no priority" : ""}${it.eff ? " · effort " + (it.eff === "?" ? "unknown" : it.eff) : ""}`;
