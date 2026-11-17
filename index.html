@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>EEZ RollupX Roadmap</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: strawmap-style swimlanes. Bands = workstreams, rows = topics, columns = horizons (Shipped → Now → Next → Later → North stars). Box fill = priority, arrows = throughlines. */
+:root {
+  --bg: #ffffff; --fg: #1b1e23; --muted: #5b636d; --line: #d9dde2; --panel: #f3f4f6;
+  --band-l: 95%; --band-s: 55%; --edge-l: 72%;
+  --p1-l: 40%; --p1-s: 62%; --p1-fg: #ffffff;
+  --p2-l: 80%; --p2-s: 60%; --p2-fg: #1b1e23;
+  --p3-l: 91%; --p3-s: 45%; --p3-fg: #1b1e23;
+  --nt-fg: #3a4049;
+  --star-bg: #50555c; --star-fg: #ffffff;
+  --badge-bg: #2b2f35; --badge-fg: #ffffff;
+  --arrow-l: 55%; --label-l: 34%;
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #101215; --fg: #e6e9ed; --muted: #9ba3ad; --line: #2b3037; --panel: #181b20;
+  --band-l: 13%; --band-s: 30%; --edge-l: 32%;
+  --p1-l: 52%; --p1-s: 58%; --p1-fg: #0c0e10;
+  --p2-l: 30%; --p2-s: 40%; --p2-fg: #e6e9ed;
+  --p3-l: 19%; --p3-s: 25%; --p3-fg: #d5dae0;
+  --nt-fg: #c4cad2;
+  --star-bg: #d9dde2; --star-fg: #101215;
+  --badge-bg: #e6e9ed; --badge-fg: #101215;
+  --arrow-l: 60%; --label-l: 74%; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #101215; --fg: #e6e9ed; --muted: #9ba3ad; --line: #2b3037; --panel: #181b20;
+  --band-l: 13%; --band-s: 30%; --edge-l: 32%;
+  --p1-l: 52%; --p1-s: 58%; --p1-fg: #0c0e10;
+  --p2-l: 30%; --p2-s: 40%; --p2-fg: #e6e9ed;
+  --p3-l: 19%; --p3-s: 25%; --p3-fg: #d5dae0;
+  --nt-fg: #c4cad2;
+  --star-bg: #d9dde2; --star-fg: #101215;
+  --badge-bg: #e6e9ed; --badge-fg: #101215;
+  --arrow-l: 60%; --label-l: 74%; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 13px; line-height: 1.4; }
+.wrap { max-width: 1440px; margin: 0 auto; padding-block: 20px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.top h1 { margin: 0; font-family: var(--mono); font-size: 18px; font-weight: 500; }
+.top h1 span { color: var(--muted); font-weight: 400; }
+.top .upd { font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: right; }
+.top .upd a { color: inherit; }
+.scroller { overflow-x: auto; padding-bottom: 8px; }
+.map { position: relative; min-width: 1240px; }
+.cols, .row { display: grid; grid-template-columns: 116px 96px 150px minmax(0,1fr) minmax(0,1.35fr) minmax(0,1.1fr) 150px; }
+.cols { font-family: var(--mono); font-size: 11.5px; color: var(--muted); padding-bottom: 6px; }
+.cols div { padding-left: 10px; }
+.cols b { display: block; color: var(--fg); font-weight: 600; font-size: 12.5px; }
+.band { --h: 215; position: relative; background: hsl(var(--h) var(--band-s) var(--band-l)); border-radius: 10px; margin-bottom: 8px; padding-block: 6px; }
+.band-name { position: absolute; left: 12px; top: 12px; width: 100px; font-family: var(--mono); font-weight: 600; font-size: 14px; line-height: 1.2; color: hsl(var(--h) 50% var(--label-l)); }
+.band-name small { display: block; margin-top: 4px; font-weight: 400; font-size: 10.5px; color: var(--muted); }
+.row { min-height: 44px; position: relative; }
+.row + .row { border-top: 1px dashed hsl(var(--h) 30% var(--edge-l) / .45); }
+.rlabel { grid-column: 2; align-self: center; text-align: right; padding-right: 12px; font-family: var(--mono); font-size: 11px; color: hsl(var(--h) 45% var(--label-l)); }
+.cell { display: flex; flex-wrap: wrap; align-content: center; align-items: center; gap: 12px 14px; padding: 6px 10px; border-left: 1px dashed hsl(var(--h) 30% var(--edge-l) / .6); position: relative; z-index: 1; }
+.box { position: relative; display: block; flex: 0 0 auto; width: 148px; padding: 5px 8px 6px; border-radius: 5px; border: 1.5px solid hsl(var(--h) 45% var(--edge-l)); text-decoration: none; text-align: center; font-size: 11.5px; line-height: 1.25; transition: transform .12s ease, box-shadow .12s ease; }
+.box:hover, .box:focus-visible { transform: translateY(-1px); box-shadow: 0 2px 8px hsl(var(--h) 40% 30% / .25); outline: none; }
+.box:focus-visible { outline: 2px solid hsl(var(--h) 60% var(--arrow-l)); outline-offset: 2px; }
+.box .ref { display: block; font-family: var(--mono); font-size: 9.5px; opacity: .75; margin-top: 2px; }
+.box.P1 { background: hsl(var(--h) var(--p1-s) var(--p1-l)); color: var(--p1-fg); border-color: hsl(var(--h) var(--p1-s) calc(var(--p1-l) - 8%)); font-weight: 500; }
+.box.P2 { background: hsl(var(--h) var(--p2-s) var(--p2-l)); color: var(--p2-fg); }
+.box.P3 { background: hsl(var(--h) var(--p3-s) var(--p3-l)); color: var(--p3-fg); }
+.box.NT { background: transparent; color: var(--nt-fg); border-style: dashed; }
+.box.done { background: transparent; color: var(--nt-fg); border-style: solid; }
+.box .badge { position: absolute; top: -7px; right: -6px; font-family: var(--mono); font-size: 8.5px; font-weight: 600; padding: 1px 4px; border-radius: 3px; background: var(--badge-bg); color: var(--badge-fg); letter-spacing: .03em; }
+.box .prog { display: block; height: 3px; margin-top: 4px; border-radius: 2px; background: hsl(var(--h) 30% var(--edge-l) / .5); overflow: hidden; }
+.box .prog i { display: block; height: 100%; background: currentColor; }
+.box.wip::before { content: ""; position: absolute; left: -5px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: hsl(140 60% 42%); box-shadow: 0 0 0 2px var(--bg); }
+.star { background: var(--star-bg); color: var(--star-fg); border-color: var(--star-bg); font-weight: 600; }
+.star em { display: block; font-style: italic; font-weight: 400; font-size: 10.5px; opacity: .85; }
+.star::after { content: "★"; position: absolute; top: -9px; left: 50%; margin-left: -6px; font-size: 12px; color: hsl(40 90% 55%); }
+svg.arrows { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: visible; }
+svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
+.below { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; margin-top: 18px; }
+.legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; align-content: start; }
+.legend .box { --h: 215; width: auto; pointer-events: none; }
+.notes { background: var(--panel); border-radius: 8px; padding: 12px 16px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.notes h2 { margin: 0 0 6px; text-align: center; font-size: 11.5px; letter-spacing: .08em; font-weight: 600; color: var(--fg); }
+.notes ul { margin: 0; padding-left: 16px; display: grid; gap: 3px; }
+.notes b { color: var(--fg); font-weight: 500; }
+.shipped { margin-top: 18px; font-size: 12px; color: var(--muted); }
+.shipped summary { cursor: pointer; font-family: var(--mono); color: var(--fg); }
+.shipped ul { columns: 2 300px; margin: 8px 0 0; padding-left: 18px; }
+.shipped a { color: inherit; }
+@media (prefers-reduced-motion: reduce) { .box { transition: none; } }
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <h1>EEZ RollupX Roadmap <span>· strawmap view</span></h1>
+    <div class="upd">updated 17 Nov 2026 · from the <a href="https://github.com/orgs/eez-association/projects/1/views/1">project board</a></div>
+  </div>
+
+  <div class="scroller">
+    <div class="map" id="map">
+      <div class="cols">
+        <div></div><div></div>
+        <div><b>shipped</b>done</div>
+        <div><b>now</b>in progress · P1</div>
+        <div><b>next</b>P2</div>
+        <div><b>later</b>P3 · research</div>
+        <div><b>north stars</b>draft</div>
+      </div>
+      <div id="bands"></div>
+      <svg class="arrows" id="arrows" aria-hidden="true"></svg>
+    </div>
+  </div>
+
+  <div class="below">
+    <div class="legend">
+      <span class="box P1">P1 high</span>
+      <span class="box P2">P2 normal</span>
+      <span class="box P3">P3 low</span>
+      <span class="box NT">no priority yet</span>
+      <span class="box P2 wip">in progress</span>
+      <span class="box P2">bug<span class="badge">BUG</span></span>
+      <span class="box P2">feature<span class="badge">FEAT</span></span>
+      <span class="box star">north star<em>draft goal</em></span>
+    </div>
+    <div class="notes">
+      <h2>DISCLAIMERS</h2>
+      <ul>
+        <li><b>horizons, not dates:</b> the board has no dates, milestones or iterations yet</li>
+        <li><b>placement:</b> by status and priority; dashed boxes have no priority, so their column is a proposal</li>
+        <li><b>arrows:</b> throughlines between related cards, not hard dependencies</li>
+        <li><b>north stars:</b> drafted from the cards that point at them, not agreed goals</li>
+        <li><b>owners:</b> only core#61 has an assignee</li>
+      </ul>
+    </div>
+  </div>
+
+  <details class="shipped">
+    <summary>13 shipped cards (rollup0 backport hardening, sub-issues of #135)</summary>
+    <ul id="shippedList"></ul>
+  </details>
+</div>
+
+<script>
+const RX = "https://github.com/eez-association/eez-rollupX/issues/";
+const PM = "https://github.com/eez-association/eez-rollupx-pm/issues/";
+const CP = "https://github.com/eez-association/eez-core-protocol/issues/";
+const COLS = ["shipped", "now", "next", "later", "star"];
+// item: [id, short label, full title, url, priority (P1/P2/P3/NT), badge, effort]
+const I = (id, label, title, url, pr, badge, eff, extra) => ({ id, label, title, url, pr, badge, eff, ...extra });
+
+const bands = [
+  { name: "Cross-chain execution", sub: "admission, settlement, ordering", h: 215, rows: [
+    { label: "admission", cells: {
+      now: [I("120", "pending-tx admission + retry errors", "Fix pending-transaction admission and clarify retry errors", RX+120, "P1", "BUG", "L")],
+      next: [I("130", "manager-destination errors in quotes", "Preserve manager-destination errors in fee quotes and admission", RX+130, "P2", "BUG", "M"),
+             I("81", "retry limits + rejection diagnostics", "Qualify remaining retry limits and rejection diagnostics", RX+81, "P2", "", "L")] } },
+    { label: "limits", cells: {
+      next: [I("18", "reject oversized txs before tracing", "Reject oversized transactions before tracing using source-chain limits", RX+18, "P2", "BUG", "M"),
+             I("20", "L2→L1 simulation gas cap", "Limit L2-to-L1 target simulation to 16,777,216 gas", RX+20, "P2", "", "S")] } },
+    { label: "settlement", cells: {
+      now: [I("11", "settlement stalls", "Investigate remaining cross-chain settlement stalls", RX+11, "P1", "", "?"),
+            I("93", "GPv2 nested-wrapper quote repro", "Reproduce GPv2 nested-wrapper quote failure on current main", RX+93, "P1", "BUG", "?")],
+      next: [I("85", "nested-call + follower replay", "Qualify remaining nested-call and follower replay support", RX+85, "P2", "", "L"),
+             I("17", "constructor cross-chain calls", "Detect constructor cross-chain calls before forwarding deployments", RX+17, "P2", "BUG", "L"),
+             I("19", "top-level source revert policy", "Decide inclusion policy for top-level cross-chain source reverts", RX+19, "P2", "", "M")] } },
+    { label: "ordering & fees", cells: {
+      later: [I("12", "FIFO vs fee-based ordering", "Research FIFO versus fee-based cross-chain transaction ordering", RX+12, "P3", "", "?"),
+              I("172", "fair batch fees + rebates", "Research fair cross-chain batch fees, user rebates and future-batch subsidies", RX+172, "NT"),
+              I("173", "multi-builder bundles vs DoS", "Research multiple builder bundles to reduce settlement DoS", RX+173, "NT")],
+      star: [I("s-fees", "fair cross-chain fees", "", null, "STAR", "", "", { sub: "ordering + rebates" })] } },
+    { label: "execution model", cells: {
+      later: [I("170", "pure L2 txs in Sync blocks", "Research pure L2 transaction inclusion in Sync blocks", RX+170, "NT"),
+              I("174", "account abstraction, atomic x-chain", "Research account abstraction for atomic cross-chain transactions", RX+174, "NT"),
+              I("pm2", "L2↔L2 in one composer", "Research L2-to-L2 execution within one composer", PM+2, "NT")] } },
+  ]},
+  { name: "Proving & security", sub: "provers, access, audit", h: 268, rows: [
+    { label: "provers", cells: {
+      next: [I("149", "multi-prover quorum", "Design and implement multi-prover quorum support", RX+149, "P2", "FEAT", "L")],
+      later: [I("175", "prover in hardware TEE", "Run the RollupX prover in a hardware-backed TEE", RX+175, "NT"),
+              I("pm3", "ZisK prover integration", "Research ZisK prover integration with EEZ", PM+3, "NT")],
+      star: [I("s-prove", "multi-prover RollupX", "", null, "STAR", "", "", { sub: "quorum + TEE + ZK" })] } },
+    { label: "access & DoS", cells: {
+      now: [I("151", "authenticate Composer–prover", "Authenticate Composer–prover control access", RX+151, "P1", "", "?")],
+      next: [I("177", "DoS risks + node resource limits", "Assess denial-of-service risks and node resource protections", RX+177, "NT")] } },
+    { label: "audit", cells: {
+      now: [I("pm4", "core-protocol contract audit", "Track the eez-core-protocol smart contract audit", PM+4, "NT")] } },
+  ]},
+  { name: "Operations", sub: "node, deploys, composers", h: 150, rows: [
+    { label: "node", cells: {
+      now: [I("158", "Reth 2.11.0 upgrade", "Upgrade Reth to 2.11.0", RX+158, "P1", "", "L")],
+      later: [I("114", "simpler snapshot cleanup (optional)", "Optional: simplify snapshot cleanup for the current Sync block model", RX+114, "P3", "", "M")] } },
+    { label: "deploys", cells: {
+      next: [I("150", "structured config files", "Add structured configuration files with deployment compatibility", RX+150, "P2", "FEAT", "L"),
+             I("pm5", "deprecate first mainnet deployment", "Deprecate the first EEZ mainnet deployment", PM+5, "NT")] } },
+    { label: "composers", cells: {
+      next: [I("169", "multiple composers per deployment", "Support and test multiple composers for one RollupX deployment", RX+169, "NT")],
+      star: [I("s-comp", "many composers", "", null, "STAR", "", "", { sub: "one deployment" })] } },
+    { label: "testing", cells: {
+      next: [I("152", "randomized queue/recovery models", "Add randomized queue/recovery models and fault coverage", RX+152, "P2", "", "L")] } },
+  ]},
+  { name: "Spec & ecosystem", sub: "backports, spec, docs", h: 32, rows: [
+    { label: "rollup0 backports", cells: {
+      shipped: [I("done", "13 hardening fixes", "13 backport hardening cards done (see list below)", RX+135, "DONE")],
+      now: [I("135", "track rollup0 backports", "Track remaining rollup0 backports", RX+135, "P2", "", "", { wip: [13, 17] })],
+      next: [I("133", "review remaining backports", "Review remaining rollup0-to-rollupX backports", RX+133, "NT"),
+             I("178", "audit open rollup0 issues", "Audit all open rollup0 issues for RollupX applicability", RX+178, "NT")] } },
+    { label: "spec", cells: {
+      next: [I("176", "compare impl vs specs-draft", "Compare RollupX implementation with specs-draft", RX+176, "NT"),
+             I("pm6", "minimal rollup integration spec", "Write a minimal rollup integration spec for EEZ", PM+6, "NT")],
+      star: [I("s-spec", "spec-aligned RollupX", "", null, "STAR", "", "", { sub: "documented integration" })] } },
+    { label: "docs & tools", cells: {
+      next: [I("111", "doc: group cleanup + finalization", "Document group cleanup and block finalization with an example", RX+111, "P2", "", "S"),
+             I("c61", "AI skill for core contracts", "Add an AI skill for using eez-core-protocol contracts", CP+61, "P2", "", "?")] } },
+    { label: "chains", cells: {
+      later: [I("pm1", "non-EVM chain support", "Research support for non-EVM chains", PM+1, "NT")] } },
+  ]},
+];
+
+// throughlines [from, to]
+const links = [
+  ["done", "135"], ["135", "133"], ["135", "178"],
+  ["120", "130"], ["120", "81"], ["11", "85"], ["93", "85"],
+  ["12", "s-fees"], ["172", "s-fees"], ["173", "s-fees"],
+  ["151", "149"], ["149", "175"], ["175", "s-prove"], ["pm3", "s-prove"],
+  ["169", "s-comp"], ["176", "s-spec"], ["pm6", "s-spec"],
+];
+
+const shipped = [
+  [136, "Bound v2 prover replies independently of witness uploads"],
+  [137, "Preserve checked manager lookup and provider failure types"],
+  [138, "Reject incomplete mined settlement-log positions"],
+  [139, "Assess the Hickory 0.26.3 patch update"],
+  [140, "Redact credential-bearing URLs across diagnostics and front errors"],
+  [141, "Assess diagnostics when the witness-feed receiver closes"],
+  [142, "Determine safe retry behavior during front startup"],
+  [143, "Map malformed codec cases to the native target grammar"],
+  [144, "Qualify finalized missing-blob observation policy"],
+  [145, "Verify canonical and simulation chain-identity mismatch handling"],
+  [146, "Bound the remaining ETH-conservation evidence gap"],
+  [147, "Determine whether the source tracing probe adds target coverage"],
+  [148, "Characterize streaming deadlines for a defined workload"],
+];
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const refOf = it => it.id === "done" ? "#136–148" : it.id.startsWith("pm") ? "pm#" + it.id.slice(2) : it.id.startsWith("c") ? "core#61" : "#" + it.id;
+
+function boxHTML(it) {
+  if (it.pr === "STAR") return `<div class="box star" data-id="${it.id}">${esc(it.label)}<em>${esc(it.sub)}</em></div>`;
+  const cls = it.pr === "DONE" ? "done" : it.pr;
+  const eff = it.eff && it.eff !== "?" ? ` · ${it.eff}` : "";
+  const tip = `${refOf(it)} ${it.title}${it.pr && it.pr !== "NT" && it.pr !== "DONE" ? " · " + it.pr : it.pr === "NT" ? " · no priority" : ""}${it.eff ? " · effort " + (it.eff === "?" ? "unknown" : it.eff) : ""}`;
+  const prog = it.wip ? `<span class="prog"><i style="width:${Math.round(100 * it.wip[0] / it.wip[1])}%"></i></span>` : "";
+  const ref = it.wip ? `${refOf(it)} · ${it.wip[0]}/${it.wip[1]}` : refOf(it) + eff;
+  return `<a class="box ${cls}${it.wip ? " wip" : ""}" data-id="${it.id}" href="${it.url}" target="_blank" rel="noopener" title="${esc(tip)}">${esc(it.label)}<span class="ref">${esc(ref)}</span>${prog}${it.badge ? `<span class="badge">${it.badge}</span>` : ""}</a>`;
+}
+
+document.getElementById("bands").innerHTML = bands.map(b => `
+  <section class="band" style="--h:${b.h}">
+    <div class="band-name">${esc(b.name)}<small>${esc(b.sub)}</small></div>
+    ${b.rows.map(r => `<div class="row"><div class="rlabel">${esc(r.label)}</div>${COLS.map(c => `<div class="cell">${(r.cells[c] || []).map(boxHTML).join("")}</div>`).join("")}</div>`).join("")}
+  </section>`).join("");
+
+document.getElementById("shippedList").innerHTML = shipped.map(([n, t]) => `<li><a href="${RX + n}" target="_blank" rel="noopener">#${n}</a> ${esc(t)}</li>`).join("");
+
+const map = document.getElementById("map"), svg = document.getElementById("arrows");
+function hueOf(el) { return getComputedStyle(el.closest(".band")).getPropertyValue("--h").trim(); }
+function draw() {
+  const m = map.getBoundingClientRect();
+  const al = getComputedStyle(document.documentElement).getPropertyValue("--arrow-l").trim();
+  let defs = "", paths = "";
+  const hues = new Set();
+  for (const [a, b] of links) {
+    const A = map.querySelector(`[data-id="${a}"]`), B = map.querySelector(`[data-id="${b}"]`);
+    if (!A || !B) continue;
+    const ra = A.getBoundingClientRect(), rb = B.getBoundingClientRect();
+    const x1 = ra.right - m.left, y1 = ra.top + ra.height / 2 - m.top;
+    const x2 = rb.left - m.left - 4, y2 = rb.top + rb.height / 2 - m.top;
+    const dx = Math.max(24, (x2 - x1) / 2);
+    const h = hueOf(A); hues.add(h);
+    paths += `<path d="M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}" stroke="hsl(${h} 45% ${al})" marker-end="url(#ah${h})"/>`;
+  }
+  for (const h of hues) defs += `<marker id="ah${h}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="hsl(${h} 45% ${al})" stroke="none"/></marker>`;
+  svg.innerHTML = `<defs>${defs}</defs>${paths}`;
+}
+draw();
+if (document.fonts) document.fonts.ready.then(draw);
+try { new ResizeObserver(draw).observe(map); } catch (e) { window.addEventListener("resize", draw); }
+matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", draw);
+</script>
+
+</body>
+</html>
