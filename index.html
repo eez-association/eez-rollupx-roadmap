@@ -94,6 +94,21 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
 .shipped summary { cursor: pointer; font-family: var(--mono); color: var(--fg); }
 .shipped ul { columns: 2 300px; margin: 8px 0 0; padding-left: 18px; }
 .shipped a { color: inherit; }
+#list { display: none; }
+#list .lband { --h: 215; background: hsl(var(--h) var(--band-s) var(--band-l)); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+#list h2 { margin: 0 0 2px; font-family: var(--mono); font-size: 14px; font-weight: 600; color: hsl(var(--h) 50% var(--label-l)); }
+#list h2 small { display: block; margin-top: 2px; font-weight: 400; font-size: 11px; color: var(--muted); }
+#list h3 { margin: 14px 0 8px; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--fg); }
+#list h3 span { font-weight: 400; color: var(--muted); }
+#list .items { display: grid; gap: 10px; }
+#list .box { width: auto; text-align: left; font-size: 13px; padding: 8px 10px; }
+#list .box .topic { display: block; font-family: var(--mono); font-size: 11px; opacity: .8; margin-bottom: 2px; }
+#list .box.wip::before { left: auto; right: 10px; top: 14px; margin-top: 0; }
+#list .star::after { left: auto; right: 8px; margin-left: 0; }
+@media (max-width: 700px) {
+  .scroller { display: none; }
+  #list { display: block; }
+}
 @media (prefers-reduced-motion: reduce) { .box { transition: none; } }
 </style>
 
@@ -117,6 +132,7 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
       <svg class="arrows" id="arrows" aria-hidden="true"></svg>
     </div>
   </div>
+  <div id="list"></div>
 
   <div class="below">
     <div class="legend">
@@ -260,6 +276,16 @@ document.getElementById("bands").innerHTML = bands.map(b => `
   <section class="band" style="--h:${b.h}">
     <div class="band-name">${esc(b.name)}<small>${esc(b.sub)}</small></div>
     ${b.rows.map(r => `<div class="row"><div class="rlabel">${esc(r.label)}</div>${COLS.map(c => `<div class="cell">${(r.cells[c] || []).map(boxHTML).join("")}</div>`).join("")}</div>`).join("")}
+  </section>`).join("");
+
+const COL_HEAD = { shipped: ["shipped", "done"], now: ["now", "in progress · P1"], next: ["next", "P2"], later: ["later", "P3 · research"], star: ["milestones", "rollupx-pm issues"] };
+document.getElementById("list").innerHTML = bands.map(b => `
+  <section class="lband" style="--h:${b.h}">
+    <h2>${esc(b.name)}<small>${esc(b.sub)}</small></h2>
+    ${COLS.map(c => {
+      const items = b.rows.flatMap(r => (r.cells[c] || []).map(it => boxHTML(it).replace(/^(<(?:a|div) [^>]*>)/, `$1<span class="topic">${esc(r.label)}</span>`)));
+      return items.length ? `<h3>${COL_HEAD[c][0]} <span>· ${COL_HEAD[c][1]}</span></h3><div class="items">${items.join("")}</div>` : "";
+    }).join("")}
   </section>`).join("");
 
 document.getElementById("shippedList").innerHTML = shipped.map(([n, t]) => `<li><a href="${RX + n}" target="_blank" rel="noopener">#${n}</a> ${esc(t)}</li>`).join("");
