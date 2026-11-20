@@ -115,7 +115,7 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
 <div class="wrap">
   <div class="top">
     <h1>EEZ RollupX Roadmap <span>· strawmap view</span></h1>
-    <div class="upd">updated 17 Nov 2026 · from the <a href="https://github.com/orgs/eez-association/projects/1/views/1">project board</a></div>
+    <div class="upd">updated 20 Nov 2026 · from the <a href="https://github.com/orgs/eez-association/projects/1/views/1">project board</a></div>
   </div>
 
   <div class="scroller">
@@ -143,6 +143,7 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
       <span class="box P2 wip">in progress</span>
       <span class="box P2">bug<span class="badge">BUG</span></span>
       <span class="box P2">feature<span class="badge">FEAT</span></span>
+      <span class="box NT">not on board<span class="badge">NEW</span></span>
       <span class="box star">milestone<em>pm tracking issue</em></span>
     </div>
     <div class="notes">
@@ -152,13 +153,14 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
         <li><b>placement:</b> by status and priority; dashed boxes have no priority, so their column is a proposal</li>
         <li><b>arrows:</b> throughlines between related cards, not hard dependencies</li>
         <li><b>milestones:</b> the six eez-rollupx-pm tracking issues, placed in the row they close out</li>
+        <li><b>NEW:</b> #181 and #184 are open in eez-rollupX but not on the board yet; their placement is a proposal</li>
         <li><b>owners:</b> only core#61 has an assignee</li>
       </ul>
     </div>
   </div>
 
   <details class="shipped">
-    <summary>13 shipped cards (rollup0 backport hardening, sub-issues of #135)</summary>
+    <summary>15 shipped cards (#136–149 are sub-issues of #135, plus #158)</summary>
     <ul id="shippedList"></ul>
   </details>
 </div>
@@ -174,15 +176,18 @@ const I = (id, label, title, url, pr, badge, eff, extra) => ({ id, label, title,
 const bands = [
   { name: "Cross-chain execution", sub: "admission, settlement, ordering", h: 215, rows: [
     { label: "admission", cells: {
-      now: [I("120", "pending-tx admission + retry errors", "Fix pending-transaction admission and clarify retry errors", RX+120, "P1", "BUG", "L")],
+      now: [I("120", "pending-tx admission + retry errors", "Fix pending-transaction admission and clarify retry errors", RX+120, "P1", "BUG", "L"),
+            I("181", "L1→L2 quotes during L2 backlog", "Composer: L1→L2 quotes rejected as unsupported_transaction while L2 backlog exceeds blob allowance · fix merged in PR #182, issue still open · not on the board", RX+181, "NT", "NEW", "", { note: "fix merged #182" })],
       next: [I("130", "manager-destination errors in quotes", "Preserve manager-destination errors in fee quotes and admission", RX+130, "P2", "BUG", "M"),
              I("81", "retry limits + rejection diagnostics", "Qualify remaining retry limits and rejection diagnostics", RX+81, "P2", "", "L")] } },
+    { label: "RPC", cells: {
+      next: [I("184", "cross-chain aware eth_call", "Composer fronts: make eth_call cross-chain aware, like eth_estimateGas · not on the board", RX+184, "NT", "NEW", "")] } },
     { label: "limits", cells: {
       next: [I("18", "reject oversized txs before tracing", "Reject oversized transactions before tracing using source-chain limits", RX+18, "P2", "BUG", "M"),
              I("20", "L2→L1 simulation gas cap", "Limit L2-to-L1 target simulation to 16,777,216 gas", RX+20, "P2", "", "S")] } },
     { label: "settlement", cells: {
       now: [I("11", "settlement stalls", "Investigate remaining cross-chain settlement stalls", RX+11, "P1", "", "?"),
-            I("93", "GPv2 nested-wrapper quote repro", "Reproduce GPv2 nested-wrapper quote failure on current main", RX+93, "P1", "BUG", "?")],
+            I("93", "GPv2 nested-wrapper quote repro", "Reproduce GPv2 nested-wrapper quote failure on current main", RX+93, "P1", "BUG", "?", { wipdot: true })],
       next: [I("85", "nested-call + follower replay", "Qualify remaining nested-call and follower replay support", RX+85, "P2", "", "L"),
              I("17", "constructor cross-chain calls", "Detect constructor cross-chain calls before forwarding deployments", RX+17, "P2", "BUG", "L"),
              I("19", "top-level source revert policy", "Decide inclusion policy for top-level cross-chain source reverts", RX+19, "P2", "", "M")] } },
@@ -197,7 +202,7 @@ const bands = [
   ]},
   { name: "Proving & security", sub: "provers, access, audit", h: 268, rows: [
     { label: "provers", cells: {
-      next: [I("149", "multi-prover quorum", "Design and implement multi-prover quorum support", RX+149, "P2", "FEAT", "L")],
+      shipped: [I("149", "multi-prover quorum", "Design and implement multi-prover quorum support · done (PR #180, M-of-N attestation)", RX+149, "DONE", "FEAT", "L")],
       later: [I("175", "prover in hardware TEE", "Run the RollupX prover in a hardware-backed TEE", RX+175, "NT")],
       star: [I("pm3", "ZisK prover integration", "Research ZisK prover integration with EEZ", PM+3, "STAR", "", "", { sub: "pm#3 · research" })] } },
     { label: "access & DoS", cells: {
@@ -208,7 +213,7 @@ const bands = [
   ]},
   { name: "Operations", sub: "node, deploys, composers", h: 150, rows: [
     { label: "node", cells: {
-      now: [I("158", "Reth 2.11.0 upgrade", "Upgrade Reth to 2.11.0", RX+158, "P1", "", "L")],
+      shipped: [I("158", "Reth 2.11.0 upgrade", "Upgrade Reth to 2.11.0 · done (PR #179)", RX+158, "DONE", "", "L")],
       later: [I("114", "simpler snapshot cleanup (optional)", "Optional: simplify snapshot cleanup for the current Sync block model", RX+114, "P3", "", "M")] } },
     { label: "deploys", cells: {
       next: [I("150", "structured config files", "Add structured configuration files with deployment compatibility", RX+150, "P2", "FEAT", "L")],
@@ -216,12 +221,12 @@ const bands = [
     { label: "composers", cells: {
       next: [I("169", "multiple composers per deployment", "Support and test multiple composers for one RollupX deployment", RX+169, "NT")] } },
     { label: "testing", cells: {
-      next: [I("152", "randomized queue/recovery models", "Add randomized queue/recovery models and fault coverage", RX+152, "P2", "", "L")] } },
+      now: [I("152", "randomized queue/recovery models", "Add randomized queue/recovery models and fault coverage · in progress (PR #185)", RX+152, "P2", "", "L", { wipdot: true })] } },
   ]},
   { name: "Spec & ecosystem", sub: "backports, spec, docs", h: 32, rows: [
     { label: "rollup0 backports", cells: {
       shipped: [I("done", "13 hardening fixes", "13 backport hardening cards done (see list below)", RX+135, "DONE")],
-      now: [I("135", "track rollup0 backports", "Track remaining rollup0 backports", RX+135, "P2", "", "", { wip: [13, 17] })],
+      now: [I("135", "track rollup0 backports", "Track rollup0 backports and RollupX follow-up work", RX+135, "NT", "", "", { wip: [14, 15] })],
       next: [I("133", "review remaining backports", "Review remaining rollup0-to-rollupX backports", RX+133, "NT"),
              I("178", "audit open rollup0 issues", "Audit all open rollup0 issues for RollupX applicability", RX+178, "NT")] } },
     { label: "spec", cells: {
@@ -239,7 +244,7 @@ const bands = [
 const links = [
   ["done", "135"], ["135", "133"], ["135", "178"],
   ["120", "130"], ["120", "81"], ["11", "85"], ["93", "85"],
-  ["151", "149"], ["149", "175"], ["175", "pm3"],
+  ["149", "175"], ["175", "pm3"],
   ["170", "pm2"], ["174", "pm2"], ["176", "pm6"], ["150", "pm5"],
 ];
 
@@ -257,6 +262,8 @@ const shipped = [
   [146, "Bound the remaining ETH-conservation evidence gap"],
   [147, "Determine whether the source tracing probe adds target coverage"],
   [148, "Characterize streaming deadlines for a defined workload"],
+  [149, "Design and implement multi-prover quorum support"],
+  [158, "Upgrade Reth to 2.11.0"],
 ];
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -268,8 +275,8 @@ function boxHTML(it) {
   const eff = it.eff && it.eff !== "?" ? ` · ${it.eff}` : "";
   const tip = `${refOf(it)} ${it.title}${it.pr && it.pr !== "NT" && it.pr !== "DONE" ? " · " + it.pr : it.pr === "NT" ? " · no priority" : ""}${it.eff ? " · effort " + (it.eff === "?" ? "unknown" : it.eff) : ""}`;
   const prog = it.wip ? `<span class="prog"><i style="width:${Math.round(100 * it.wip[0] / it.wip[1])}%"></i></span>` : "";
-  const ref = it.wip ? `${refOf(it)} · ${it.wip[0]}/${it.wip[1]}` : refOf(it) + eff;
-  return `<a class="box ${cls}${it.wip ? " wip" : ""}" data-id="${it.id}" href="${it.url}" target="_blank" rel="noopener" title="${esc(tip)}">${esc(it.label)}<span class="ref">${esc(ref)}</span>${prog}${it.badge ? `<span class="badge">${it.badge}</span>` : ""}</a>`;
+  const ref = (it.wip ? `${refOf(it)} · ${it.wip[0]}/${it.wip[1]}` : refOf(it) + eff) + (it.note ? ` · ${it.note}` : "");
+  return `<a class="box ${cls}${it.wip || it.wipdot ? " wip" : ""}" data-id="${it.id}" href="${it.url}" target="_blank" rel="noopener" title="${esc(tip)}">${esc(it.label)}<span class="ref">${esc(ref)}</span>${prog}${it.badge ? `<span class="badge">${it.badge}</span>` : ""}</a>`;
 }
 
 document.getElementById("bands").innerHTML = bands.map(b => `
