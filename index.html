@@ -115,7 +115,7 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
 <div class="wrap">
   <div class="top">
     <h1>EEZ RollupX Roadmap <span>· strawmap view</span></h1>
-    <div class="upd">updated 20 Nov 2026 · from the <a href="https://github.com/orgs/eez-association/projects/1/views/1">project board</a></div>
+    <div class="upd">updated 23 Nov 2026 · from the <a href="https://github.com/orgs/eez-association/projects/1/views/1">project board</a></div>
   </div>
 
   <div class="scroller">
@@ -178,15 +178,15 @@ const bands = [
       now: [I("120", "pending-tx admission + retry errors", "Fix pending-transaction admission and clarify retry errors", RX+120, "P1", "BUG", "L"),
             I("181", "L1→L2 quotes during L2 backlog", "Composer: L1→L2 quotes rejected as unsupported_transaction while L2 backlog exceeds blob allowance · fix merged in PR #182, issue still open · not on the board", RX+181, "NT", "NEW", "", { note: "fix merged #182" })],
       next: [I("130", "manager-destination errors in quotes", "Preserve manager-destination errors in fee quotes and admission", RX+130, "P2", "BUG", "M"),
-             I("81", "retry limits + rejection diagnostics", "Qualify remaining retry limits and rejection diagnostics", RX+81, "P2", "", "L")] } },
+             I("81", "retry limits + rejection diagnostics", "Qualify remaining retry limits and rejection diagnostics", RX+81, "P2", "", "L"),
+             I("186", "nested sync calls hit history-byte limit", "Composer rejects valid nested synchronous calls with history-byte quote limit · not on the board", RX+186, "NT", "NEW", "")] } },
     { label: "RPC", cells: {
       next: [I("184", "cross-chain aware eth_call", "Composer fronts: make eth_call cross-chain aware, like eth_estimateGas · not on the board", RX+184, "NT", "NEW", "")] } },
     { label: "limits", cells: {
       next: [I("18", "reject oversized txs before tracing", "Reject oversized transactions before tracing using source-chain limits", RX+18, "P2", "BUG", "M"),
              I("20", "L2→L1 simulation gas cap", "Limit L2-to-L1 target simulation to 16,777,216 gas", RX+20, "P2", "", "S")] } },
     { label: "settlement", cells: {
-      now: [I("11", "settlement stalls", "Investigate remaining cross-chain settlement stalls", RX+11, "P1", "", "?"),
-            I("93", "GPv2 nested-wrapper quote repro", "Reproduce GPv2 nested-wrapper quote failure on current main", RX+93, "P1", "BUG", "?", { wipdot: true })],
+      now: [I("11", "settlement stalls", "Investigate remaining cross-chain settlement stalls", RX+11, "P1", "", "?")],
       next: [I("85", "nested-call + follower replay", "Qualify remaining nested-call and follower replay support", RX+85, "P2", "", "L"),
              I("17", "constructor cross-chain calls", "Detect constructor cross-chain calls before forwarding deployments", RX+17, "P2", "BUG", "L"),
              I("19", "top-level source revert policy", "Decide inclusion policy for top-level cross-chain source reverts", RX+19, "P2", "", "M")] } },
@@ -242,7 +242,7 @@ const bands = [
 // throughlines [from, to]
 const links = [
   ["done", "135"], ["135", "133"], ["135", "178"],
-  ["120", "130"], ["120", "81"], ["11", "85"], ["93", "85"],
+  ["120", "130"], ["120", "81"], ["11", "85"],
   ["149", "175"], ["175", "pm3"],
   ["170", "pm2"], ["174", "pm2"], ["176", "pm6"], ["150", "pm5"],
 ];
