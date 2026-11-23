@@ -141,7 +141,6 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
       <span class="box P3">P3 low</span>
       <span class="box NT">no priority yet</span>
       <span class="box P2 wip">in progress</span>
-      <span class="box P2">bug<span class="badge">BUG</span></span>
       <span class="box P2">feature<span class="badge">FEAT</span></span>
       <span class="box NT">not on board<span class="badge">NEW</span></span>
       <span class="box star">milestone<em>pm tracking issue</em></span>
@@ -170,7 +169,7 @@ const RX = "https://github.com/eez-association/eez-rollupX/issues/";
 const PM = "https://github.com/eez-association/eez-rollupx-pm/issues/";
 const CP = "https://github.com/eez-association/eez-core-protocol/issues/";
 const COLS = ["shipped", "now", "next", "later", "star"];
-// item: [id, short label, full title, url, priority (P1/P2/P3/NT), badge, effort]
+// item: [id, short label, full title, url, priority (P1/P2/P3/NT), badge, effort] (BUG is kept to mirror the board but not shown)
 const I = (id, label, title, url, pr, badge, eff, extra) => ({ id, label, title, url, pr, badge, eff, ...extra });
 
 const bands = [
@@ -276,7 +275,7 @@ function boxHTML(it) {
   const tip = `${refOf(it)} ${it.title}${it.pr && it.pr !== "NT" && it.pr !== "DONE" ? " · " + it.pr : it.pr === "NT" ? " · no priority" : ""}${it.eff ? " · effort " + (it.eff === "?" ? "unknown" : it.eff) : ""}`;
   const prog = it.wip ? `<span class="prog"><i style="width:${Math.round(100 * it.wip[0] / it.wip[1])}%"></i></span>` : "";
   const ref = (it.wip ? `${refOf(it)} · ${it.wip[0]}/${it.wip[1]}` : refOf(it) + eff) + (it.note ? ` · ${it.note}` : "");
-  return `<a class="box ${cls}${it.wip || it.wipdot ? " wip" : ""}" data-id="${it.id}" href="${it.url}" target="_blank" rel="noopener" title="${esc(tip)}">${esc(it.label)}<span class="ref">${esc(ref)}</span>${prog}${it.badge ? `<span class="badge">${it.badge}</span>` : ""}</a>`;
+  return `<a class="box ${cls}${it.wip || it.wipdot ? " wip" : ""}" data-id="${it.id}" href="${it.url}" target="_blank" rel="noopener" title="${esc(tip)}">${esc(it.label)}<span class="ref">${esc(ref)}</span>${prog}${it.badge && it.badge !== "BUG" ? `<span class="badge">${it.badge}</span>` : ""}</a>`;
 }
 
 document.getElementById("bands").innerHTML = bands.map(b => `
