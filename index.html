@@ -115,7 +115,7 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
 <div class="wrap">
   <div class="top">
     <h1>EEZ RollupX Roadmap <span>· strawmap view</span></h1>
-    <div class="upd">updated 23 Nov 2026 · from the <a href="https://github.com/orgs/eez-association/projects/1/views/1">project board</a></div>
+    <div class="upd">updated 26 Nov 2026 · from the <a href="https://github.com/orgs/eez-association/projects/1/views/1">project board</a></div>
   </div>
 
   <div class="scroller">
@@ -152,14 +152,14 @@ svg.arrows path { fill: none; stroke-width: 1.5; opacity: .75; }
         <li><b>placement:</b> by status and priority; dashed boxes have no priority, so their column is a proposal</li>
         <li><b>arrows:</b> throughlines between related cards, not hard dependencies</li>
         <li><b>milestones:</b> the six eez-rollupx-pm tracking issues, placed in the row they close out</li>
-        <li><b>NEW:</b> #181 and #184 are open in eez-rollupX but not on the board yet; their placement is a proposal</li>
+        <li><b>NEW:</b> #181, #184 and #186 are open in eez-rollupX but not on the board yet; their placement is a proposal</li>
         <li><b>owners:</b> only core#61 has an assignee</li>
       </ul>
     </div>
   </div>
 
   <details class="shipped">
-    <summary>15 shipped cards (#136–149 are sub-issues of #135, plus #158)</summary>
+    <summary>16 shipped cards (#136–149 are sub-issues of #135, plus #158 and #191)</summary>
     <ul id="shippedList"></ul>
   </details>
 </div>
@@ -201,7 +201,8 @@ const bands = [
   ]},
   { name: "Proving & security", sub: "provers, access, audit", h: 268, rows: [
     { label: "provers", cells: {
-      shipped: [I("149", "multi-prover quorum", "Design and implement multi-prover quorum support · done (PR #180, M-of-N attestation)", RX+149, "DONE", "FEAT", "L")],
+      shipped: [I("149", "multi-prover quorum", "Design and implement multi-prover quorum support · done (PR #180, M-of-N attestation)", RX+149, "DONE", "FEAT", "L"),
+                I("191", "configurable prover-stream limit", "Make the Composer prover stream’s in-flight operation limit configurable · done (PR #192)", RX+191, "DONE", "", "")],
       later: [I("175", "prover in hardware TEE", "Run the RollupX prover in a hardware-backed TEE", RX+175, "NT")],
       star: [I("pm3", "ZisK prover integration", "Research ZisK prover integration with EEZ", PM+3, "STAR", "", "", { sub: "pm#3 · research" })] } },
     { label: "access & DoS", cells: {
@@ -263,6 +264,7 @@ const shipped = [
   [148, "Characterize streaming deadlines for a defined workload"],
   [149, "Design and implement multi-prover quorum support"],
   [158, "Upgrade Reth to 2.11.0"],
+  [191, "Make the Composer prover stream’s in-flight operation limit configurable"],
 ];
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
